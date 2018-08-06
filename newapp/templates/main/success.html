@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+
+<h3 style="color: cornflowerblue; text-align: center; padding: 30px">
+    Form added with id {{ obj.pk }}
+</h3>
+
+<h5 style="text-align: center;" >Click<a href="{% url 'Index' %}"> here</a> to continue</h5>
+ 
+{% endblock %}

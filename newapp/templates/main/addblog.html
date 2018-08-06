@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+
+<h1 style="text-align: left; color: rgb(179, 81, 179)">Write your blog here : </h1>
+
+    <form action="" method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+{% endblock %}

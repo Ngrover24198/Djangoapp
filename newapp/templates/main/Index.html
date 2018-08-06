@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+ <h1 style="text-align: center; color:rgba(204, 76, 76, 0.884) ;">
+     BLOG APP
+  </h1>
+ <h3 style="color:rgba(25, 138, 11, 0.795);">
+     Navigation:
+ </h3>
+ <ul>
+    <li style="font-size: x-large">       <a href="{% url 'readblog' %}">
+            Read existing Blogs
+        </a>
+    </li>
+    <li style="font-size: x-large" ><a href="{% url 'addblog' %}">
+            Add a New Blog
+        </a></li>
+</ul>
+{% endblock %}

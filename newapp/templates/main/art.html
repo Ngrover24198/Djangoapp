@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+ 
+<h2 style="color: seagreen ;text-align: center;">
+  "{{ blog.title }}"
+</h2>
+
+<p style="color: midnightblue; text-align: center; font-size:medium">
+    <b><i> {{ blog.body }} </i></b>
+</p>
+
+
+
+<h3 style="color: mediumslateblue; text-align: right">
+    -{{ blog.author }}
+</h3>
+
+{% endblock %}
