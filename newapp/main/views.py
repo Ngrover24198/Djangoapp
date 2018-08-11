@@ -28,7 +28,7 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            # authenticate checks whether the entered credentials are correct or not
+            # authenticate checks whether the entered credentials are correct or not or are of existing user or not
             user = authenticate(request,username = username ,password = password)
 
             if user is not None:
@@ -111,7 +111,7 @@ def Addblog(request):
 @login_required
 def art(request,id):
     rest = get_object_or_404(models.Blog,pk=id)
-    success = False
+  
     context={
         'blog':rest
     }
