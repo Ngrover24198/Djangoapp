@@ -11,3 +11,4 @@ urlpatterns = [
     path('restaurant/<int:id>', views.restaurant, name = 'restaurant'),
     path('review/<int:id>', views.review, name = 'review')
 ]
+ 

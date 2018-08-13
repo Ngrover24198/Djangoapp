@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.utils.datastructures import MultiValueDictKeyError
 
 from . import models
 from . import forms
@@ -18,14 +19,47 @@ def index(request):
 
 @login_required
 def restaurants(request):
-    query_set = models.Restaurant.objects.all()
+    
+    qs = models.Restaurant.objects.all()
+    
+    try:
+        f = request.GET['filter']
+    except MultiValueDictKeyError:
+        f = False
+    
+    try:
+        r = request.GET['reverse']
+    except MultiValueDictKeyError:
+        r = False
 
-    query_set = query_set.annotate(average_rating = Avg('review__rating')).order_by('-average_rating')
+    if f=='a2z' and r=='0':
+        qs=qs.order_by('name')
+    elif f=='a2z' and r=='1':
+        qs=qs.order_by('-name')
+    elif f=='rating' and r=='0':
+        qs=qs.annotate(average_rating=Avg('review__rating')).order_by('average_rating')
+    elif f=='rating' and r=='1':
+        qs=qs.annotate(average_rating=Avg('review__rating')).order_by('-average_rating')
 
-    context = {
-        "query_set": query_set,
+    print(request.GET)
+    context={
+        'qs' :qs,
+        'r': r,
+        'f': f,
     }
-    return render(request, 'main/restaurants.html', context)
+
+    return render(request,'main/restaurants.html',context )
+#    query_set = models.Restaurant.objects.all()
+
+#    query_set = query_set.annotate(average_rating = Avg('review__rating')).order_by('-average_rating')
+
+    #context = {
+    #    "query_set": query_set,
+   # }
+   # return render(request, 'main/restaurants.html', context)
+
+
+        
 
 @login_required
 def add_restraunt(request):
@@ -131,4 +165,4 @@ def review(request,id):
     context = {
         'review': obj
     }
-    return render(request, 'main/review.html', context)
+    return render(request, 'main/review.html', context) 

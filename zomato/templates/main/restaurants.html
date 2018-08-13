@@ -3,17 +3,24 @@
 {% block body %}
 
     <h1> Restaurants </h1>
+<br>
+<br>
+        
+        <div style="text-align: center">
+        <h6>Sort by: </h6>
+        <div>
+          <a href="{% url 'restaurants' %}?filter=a2z&reverse=0">a2z(Asc)  </a>
+          <a href="{% url 'restaurants' %}?filter=a2z&reverse=1">a2z(Desc)  </a>
+          <a href="{% url 'restaurants' %}?filter=rating&reverse=0">rating(Asc)  </a>
+          <a href="{% url 'restaurants' %}?filter=rating&reverse=1">rating(Desc)  </a>
+        </div>
+        </div>
 
-    <ul>
-
-    {% for restaurant in query_set %}
-
-        <li> 
-            <a href="{% url 'restaurant' id=restaurant.pk %}"> {{ restaurant.name }} </a> ( Average Rating: {{ restaurant.get_rating }} ) 
-        </li>
-
-    {% endfor %}
-
-    </ul>
-
+<h2 align='center'>List Of Restaurants</h2>
+<ul align='center'>
+  
+    {% for restaurant in qs %}
+   <li> <a href="{% url 'restaurant' id=restaurant.pk %}"> {{ restaurant.name }} </a> </li>
+     {% endfor %}
+</ul>
 {% endblock %}
