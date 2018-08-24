@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<p style="text-align: center">  
+<!--<p style="text-align: center">  
  {% if users.has_previous %}
         <a href="?page={{ users.previous_page_number }}"> Prev </a> <br />
     {% endif %}
@@ -12,21 +12,29 @@
     {% if users.has_next %}
         <a href="?page={{ users.next_page_number }}">Next</a>
     {% endif %}
-</p>
+</p> -->
 
+    <div style="text-align: center;">
+    <h6>Sort by:</h6>
+    <div>
+        <a href="{% url 'readblog' %}?filter=a2z&reverse=0">a2z(Asc)</a> &nbsp; 
+        <a href="{% url 'readblog' %}?filter=a2z&reverse=1">a2z(Desc)</a>
+        
+    </div>
+    </div>
 
  <h1 style="color: rgb(53, 196, 181); text-align: center"> Blogs </h1>
 
  <ul style="text-align: center;">
-     {% for art in users %}
-
+        {% for art in qs %}
+        
         <li style="font-size: x-large;"> 
             <a href="{% url 'art' id=art.pk %}">
            "{{ art.title }}"
-        </a>  ({{art.genre}})
+        </a>  ({{ art.genre }})
         </li>
-    
-    {% endfor %}
+        {% endfor %}
+   
 
  </ul>
 

@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
+from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator,EmptyPage , PageNotAnInteger
 
@@ -75,15 +76,40 @@ def Readblog(request):
 
     page = request.GET.get('page',1)
 
+
     try:
         users = paginator.page(page)
     except PageNotAnInteger:
         users = paginator.page(1)
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
+
+     
+    qs = models.Blog.objects.all()
+
+    try:
+        f=request.GET['filter']
+    except MultiValueDictKeyError:
+        f=False
+   
+
+    try:
+        r=request.GET['reverse']
+    except MultiValueDictKeyError:
+        r=False
+
+    if f=='a2z' and r=='0':
+        qs=qs.order_by('title')
+    elif f=='a2z' and r=='1':
+        qs=qs.order_by('-title')
+
+
     context = {
         "query_set":query_set,
+        "qs":qs,
         "users":users,
+        "r":r,
+        "f":f,
     }
     return render(request,'main/readblog.html',context)
 
